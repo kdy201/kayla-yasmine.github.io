@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Portfolio — Your Name</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&family=IM+Fell+English:ital@0;1&family=DM+Mono:ital,wght@0,300;1,300&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --paper:#faf6ee;
+  --paper-dark:#f0e8d8;
+  --paper-crease:#e8dcc8;
+  --ink:#2c1f0e;
+  --ink-faded:#7a6a54;
+  --ink-very-faded:#b8a890;
+  --red-pen:#b03030;
+  --blue-pen:#2a4a7a;
+  --pencil:#8a7a68;
+  --highlight:#f5e06e;
+  --highlight-pink:#fcd5d5;
+  --highlight-green:#d4ecd4;
+  --margin-line:#e8c8c0;
+  --rule-line:#ddd4c4;
+  --spine:#c8b49a;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:#d4c8b8;
+  font-family:'DM Sans',sans-serif;
+  color:var(--ink);
+  min-height:100vh;
+  padding:2rem 1rem 4rem;
+}
+
+.notebook{
+  max-width:900px;
+  margin:0 auto;
+  background:var(--paper);
+  box-shadow:
+    -4px 0 8px rgba(0,0,0,0.15),
+    4px 4px 20px rgba(0,0,0,0.25),
+    8px 8px 40px rgba(0,0,0,0.15);
+  position:relative;
+  border-radius:2px 6px 6px 2px;
+}
+
+.notebook::before{
+  content:'';
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:28px;
+  background:linear-gradient(90deg,#a89278 0%,var(--spine) 40%,#b8a488 100%);
+  border-radius:2px 0 0 2px;
+  z-index:10;
+}
+
+.spine-label{
+  position:absolute;
+  left:0;top:50%;
+  transform:translateY(-50%) rotate(-90deg);
+  font-family:'Caveat',cursive;
+  font-size:11px;
+  color:#7a6050;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  z-index:11;
+  width:120px;
+  text-align:center;
+  margin-left:-46px;
+}
+
+.pages{
+  margin-left:28px;
+  position:relative;
+}
+
+.ruled{
+  background-image:linear-gradient(var(--rule-line) 1px,transparent 1px);
+  background-size:100% 32px;
+  background-position:0 8px;
+}
+
+.margin-line{
+  position:absolute;
+  left:88px;top:0;bottom:0;
+  width:1.5px;
+  background:var(--margin-line);
+  z-index:1;
+}
+
+.page{
+  position:relative;
+  padding:2.5rem 3rem 3rem 7.5rem;
+  min-height:100vh;
+}
+.page+.page{
+  border-top:2px dashed var(--paper-crease);
+}
+
+.margin{
+  position:absolute;
+  left:0;width:80px;
+  padding-right:10px;
+  text-align:right;
+}
+.margin-note{
+  font-family:'Caveat',cursive;
+  font-size:12px;
+  color:var(--red-pen);
+  line-height:1.4;
+  transform:rotate(-1.5deg);
+  display:block;
+}
+.margin-star{color:var(--red-pen);font-size:14px}
+.margin-arrow{display:block;font-size:18px;color:var(--pencil)}
+
+.page-num{
+  position:absolute;
+  bottom:1.5rem;right:2rem;
+  font-family:'Caveat',cursive;
+  font-size:13px;
+  color:var(--ink-very-faded);
+}
+
+.entry-date{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--pencil);
+  letter-spacing:0.08em;
+  margin-bottom:0.5rem;
+  display:block;
+  font-style:italic;
+}
+h1{
+  font-family:'IM Fell English',serif;
+  font-size:2.8rem;
+  line-height:1.08;
+  color:var(--ink);
+  letter-spacing:-0.5px;
+  margin-bottom:0.75rem;
+}
+h1 em{font-style:italic;color:var(--blue-pen)}
+h2{
+  font-family:'IM Fell English',serif;
+  font-size:1.6rem;
+  color:var(--ink);
+  margin-bottom:1.25rem;
+  line-height:1.2;
+}
+h3{
+  font-family:'IM Fell English',serif;
+  font-size:1.1rem;
+  color:var(--ink);
+  margin-bottom:0.3rem;
+}
+p{
+  font-size:15px;
+  line-height:2.0;
+  color:var(--ink-faded);
+  font-weight:300;
+  margin-bottom:1rem;
+}
+p.hand{
+  font-family:'Caveat',cursive;
+  font-size:17px;
+  color:var(--ink);
+  line-height:1.75;
+  font-weight:400;
+}
+
+.hl{background:var(--highlight);padding:0 3px;border-radius:2px}
+.hl-pink{background:var(--highlight-pink);padding:0 3px;border-radius:2px}
+.hl-green{background:var(--highlight-green);padding:0 3px;border-radius:2px}
+
+.u{
+  text-decoration:underline;
+  text-decoration-style:wavy;
+  text-decoration-color:var(--red-pen);
+  text-underline-offset:3px;
+}
+
+.sticky{
+  background:#f9e87a;
+  padding:1rem 1.25rem;
+  border-radius:2px;
+  box-shadow:2px 3px 8px rgba(0,0,0,0.12);
+  transform:rotate(1.8deg);
+  display:inline-block;
+  max-width:220px;
+  font-family:'Caveat',cursive;
+  font-size:15px;
+  color:#4a3a00;
+  line-height:1.5;
+  position:absolute;
+}
+.sticky.pink{background:#ffc8c8;color:#5a1a1a;transform:rotate(-2.2deg)}
+.sticky.blue{background:#c8d8f8;color:#0a1a4a;transform:rotate(1deg)}
+
+.tape{
+  position:absolute;
+  width:60px;height:22px;
+  background:rgba(255,240,180,0.65);
+  border:1px solid rgba(200,180,100,0.3);
+  border-radius:1px;
+}
+
+.clip{
+  position:absolute;
+  right:2.5rem;top:-1px;
+  width:20px;height:48px;
+  border:2.5px solid #b0a090;
+  border-radius:10px 10px 0 0;
+  border-bottom:none;
+  z-index:5;
+}
+.clip::after{
+  content:'';
+  position:absolute;
+  left:4px;top:4px;right:4px;bottom:-4px;
+  border:2px solid #c0b0a0;
+  border-radius:8px 8px 0 0;
+  border-bottom:none;
+}
+
+#dna-canvas{
+  position:absolute;
+  right:2rem;top:1rem;
+  opacity:0.85;
+}
+
+.hand-rule{
+  border:none;
+  border-top:1.5px solid var(--pencil);
+  opacity:0.3;
+  margin:1.75rem 0;
+  transform:rotate(-0.2deg);
+}
+
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:0.75rem 0}
+.tag{
+  font-family:'Caveat',cursive;
+  font-size:14px;
+  padding:2px 10px;
+  border:1.5px solid var(--pencil);
+  border-radius:100px;
+  color:var(--pencil);
+  background:transparent;
+}
+.tag.red{border-color:var(--red-pen);color:var(--red-pen)}
+.tag.blue{border-color:var(--blue-pen);color:var(--blue-pen)}
+
+.project-entry{
+  position:relative;
+  padding:1.25rem 1.25rem 1.25rem 1.5rem;
+  margin-bottom:1.5rem;
+  border-left:3px solid var(--pencil);
+}
+.project-entry::before{
+  content:attr(data-n);
+  position:absolute;
+  left:-1.8rem;top:1.1rem;
+  font-family:'Caveat',cursive;
+  font-size:22px;
+  color:var(--red-pen);
+  font-weight:600;
+}
+
+.interest-list{
+  list-style:none;
+  columns:2;
+  gap:1.5rem;
+  margin:0.5rem 0 1rem;
+}
+.interest-list li{
+  font-family:'Caveat',cursive;
+  font-size:16px;
+  color:var(--ink);
+  line-height:1.9;
+  padding-left:1.25rem;
+  position:relative;
+}
+.interest-list li::before{
+  content:'→';
+  position:absolute;
+  left:0;
+  color:var(--red-pen);
+}
+
+.contact-block{
+  border:1.5px solid var(--pencil);
+  border-radius:4px;
+  padding:1.5rem 1.75rem;
+  position:relative;
+  margin-top:1rem;
+  transform:rotate(-0.3deg);
+}
+.contact-block h3{
+  font-family:'IM Fell English',serif;
+  font-size:1.2rem;
+  margin-bottom:1rem;
+}
+.contact-row{
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  font-family:'Caveat',cursive;
+  font-size:16px;
+  color:var(--blue-pen);
+  margin-bottom:0.5rem;
+}
+.contact-row span.label{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--pencil);
+  width:60px;
+  flex-shrink:0;
+  letter-spacing:0.06em;
+}
+
+.footnote{
+  font-family:'DM Mono',monospace;
+  font-size:10.5px;
+  color:var(--ink-very-faded);
+  font-style:italic;
+  border-top:1px solid var(--rule-line);
+  padding-top:0.5rem;
+  margin-top:2rem;
+  line-height:1.7;
+}
+
+.washi{
+  position:absolute;
+  left:0;right:0;
+  height:14px;
+  background:repeating-linear-gradient(
+    90deg,
+    rgba(255,160,160,0.35) 0px,rgba(255,160,160,0.35) 8px,
+    rgba(255,200,200,0.2) 8px,rgba(255,200,200,0.2) 16px
+  );
+}
+
+/* NAV */
+nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(250,246,238,0.96);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--paper-crease);
+  padding:0 2rem 0 3.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  height:48px;
+}
+.nav-name{
+  font-family:'IM Fell English',serif;
+  font-size:17px;color:var(--ink);
+}
+.nav-links{display:flex;gap:1.75rem}
+.nav-links a{
+  font-family:'Caveat',cursive;
+  font-size:16px;color:var(--pencil);
+  text-decoration:none;transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--red-pen)}
+
+@media(max-width:640px){
+  .page{padding:2rem 1.5rem 3rem 5.5rem}
+  #dna-canvas{display:none}
+  .margin{width:56px}
+  .margin-line{left:60px}
+  .interest-list{columns:1}
+}
+</style>
+</head>
+<body>
+
+<div class="notebook">
+  <span class="spine-label">Health Data Science · Portfolio 2025</span>
+  <div class="margin-line"></div>
+
+  <div class="pages">
+
+    <!-- NAV inside notebook -->
+    <nav>
+      <span class="nav-name">Your Name</span>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#interests">Research</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+
+    <!-- PAGE 1 — COVER -->
+    <div class="page ruled" style="padding-top:3.5rem" id="home">
+      <div class="washi" style="top:0"></div>
+      <div class="clip"></div>
+      <canvas id="dna-canvas" width="110" height="320"></canvas>
+
+      <div style="position:absolute;top:1.2rem;left:7.5rem">
+        <span class="entry-date">notebook no. 01 · begun september 2024</span>
+      </div>
+
+      <div class="margin" style="top:3rem">
+        <span class="margin-note">don't<br/>forget to<br/>add photo!</span>
+        <span class="margin-arrow" style="margin-top:4px">↓</span>
+      </div>
+
+      <div style="margin-top:1.5rem">
+        <h1 style="max-width:480px">
+          <em>Notes on biology,<br/>data & everything<br/>in between.</em>
+        </h1>
+      </div>
+
+      <div style="margin-top:1.5rem;max-width:420px">
+        <p class="hand">
+          Hi — I'm <span class="u">Your Name</span>, an MSc Health Data Science student finishing up at [University] this December. I spend most of my time thinking about genomes, wrangling messy biological datasets, and wondering why R throws that error again.
+        </p>
+      </div>
+
+      <div class="tags" style="margin-top:1rem">
+        <span class="tag red">genomics</span>
+        <span class="tag red">bioinformatics</span>
+        <span class="tag blue">R · Python</span>
+        <span class="tag blue">machine learning</span>
+        <span class="tag">public health</span>
+        <span class="tag">reproducible research</span>
+      </div>
+
+      <div style="margin-top:2rem">
+        <div class="margin" style="top:22rem">
+          <span class="margin-note" style="color:var(--blue-pen)">open to<br/>PhD offers!</span>
+          <span class="margin-star">★★</span>
+        </div>
+        <p style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pencil);letter-spacing:0.06em;margin-bottom:0.5rem">CURRENTLY SEEKING</p>
+        <p class="hand" style="font-size:16px">PhD opportunities · Graduate analyst roles · NHS · Pharma · Genomics</p>
+      </div>
+
+      <div class="sticky" style="bottom:3rem;right:130px">
+        email me!<br/>
+        <span style="font-size:12px;opacity:0.7">you@email.com</span>
+      </div>
+
+      <p class="page-num">p. 1</p>
+    </div>
+
+    <!-- PAGE 2 — ABOUT -->
+    <div class="page ruled" id="about">
+      <div class="margin" style="top:2rem">
+        <span class="margin-note">est.<br/>[year]</span>
+      </div>
+      <div class="margin" style="top:10rem">
+        <span class="margin-arrow">★</span>
+        <span class="margin-note" style="color:var(--pencil)">see also:<br/>CV p.3</span>
+      </div>
+
+      <span class="entry-date">section i — about the author</span>
+      <h2>Background & motivations</h2>
+
+      <p class="hand">
+        I came to health data science via <span class="hl">[your undergrad subject]</span> — I was hooked the moment I realised you could use statistics to ask questions about human biology that couldn't be answered any other way.
+      </p>
+      <p class="hand">
+        The thing that keeps me up at night (in a good way): the gap between what genomic data <em>could</em> tell us about population health, and what we actually manage to extract from it. Closing that gap feels important. That's what I want to work on.
+      </p>
+      <p class="hand">
+        Outside the terminal: <span class="hl-pink">[hobby one]</span>, <span class="hl-green">[hobby two]</span>, and an unhealthy relationship with coffee and crosswords.
+      </p>
+
+      <hr class="hand-rule"/>
+
+      <div style="position:relative;margin-top:1rem">
+        <div class="tape" style="top:-10px;left:10px;transform:rotate(-2deg)"></div>
+        <div style="border:1px solid var(--paper-crease);padding:1rem 1.25rem;background:var(--paper-dark);border-radius:2px">
+          <p style="font-family:'DM Mono',monospace;font-size:10px;color:var(--pencil);letter-spacing:0.1em;margin-bottom:0.75rem">CURRICULUM VITAE — SNAPSHOT</p>
+          <table style="width:100%;border-collapse:collapse">
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:10px;color:var(--pencil);padding:5px 12px 5px 0;white-space:nowrap;vertical-align:top">2024–25</td>
+              <td style="font-family:'Caveat',cursive;font-size:16px;color:var(--ink);padding:3px 0">MSc Health Data Science · [University]</td>
+            </tr>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:10px;color:var(--pencil);padding:5px 12px 5px 0;white-space:nowrap;vertical-align:top">[years]</td>
+              <td style="font-family:'Caveat',cursive;font-size:16px;color:var(--ink);padding:3px 0">BSc [Subject] · [University] · [grade]</td>
+            </tr>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:10px;color:var(--pencil);padding:5px 12px 5px 0;white-space:nowrap;vertical-align:top">[year]</td>
+              <td style="font-family:'Caveat',cursive;font-size:16px;color:var(--ink);padding:3px 0">[Any experience, placement, or prize worth noting]</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <p class="page-num">p. 2</p>
+    </div>
+
+    <!-- PAGE 3 — RESEARCH INTERESTS -->
+    <div class="page ruled" id="interests">
+      <div class="margin" style="top:2rem">
+        <span class="margin-note" style="color:var(--blue-pen)">things I<br/>love ♡</span>
+      </div>
+      <div class="margin" style="top:16rem">
+        <span class="margin-note">see:<br/>Visscher<br/>et al 2017</span>
+      </div>
+
+      <span class="entry-date">section ii — research interests</span>
+      <h2>What I think about</h2>
+
+      <p class="hand" style="font-size:15px;margin-bottom:1.25rem">
+        Below: a rough map of my intellectual territory. <span class="hl">Starred = dissertation-adjacent.</span>
+      </p>
+
+      <ul class="interest-list">
+        <li><span class="hl">Genomic epidemiology ★</span></li>
+        <li>Multi-omics integration</li>
+        <li>Population genetics</li>
+        <li>Health inequalities in genomics</li>
+        <li><span class="hl">Bioinformatics pipelines ★</span></li>
+        <li>Causal inference</li>
+        <li>Clinical NLP</li>
+        <li>Science communication</li>
+        <li>Reproducible research</li>
+        <li>Fair ML in health</li>
+      </ul>
+
+      <hr class="hand-rule"/>
+
+      <div class="margin" style="top:28rem">
+        <span class="margin-note" style="color:var(--red-pen)">expand<br/>this!</span>
+        <span class="margin-arrow">→</span>
+      </div>
+
+      <h3>Dissertation (in progress)</h3>
+      <div style="position:relative;margin-top:0.75rem">
+        <div class="tape" style="top:-8px;right:30px;width:50px;transform:rotate(1.5deg)"></div>
+        <blockquote style="border-left:3px solid var(--red-pen);padding:0.75rem 1rem;margin:0;background:rgba(255,220,220,0.15)">
+          <p class="hand" style="font-size:17px;color:var(--ink);margin:0">
+            "<span class="u">[Your dissertation title]</span>" — [one sentence describing what you're doing and why it's interesting]
+          </p>
+        </blockquote>
+      </div>
+
+      <div style="margin-top:1.25rem">
+        <p style="font-family:'DM Mono',monospace;font-size:10px;color:var(--pencil);letter-spacing:0.1em;margin-bottom:0.4rem">TOOLS & METHODS</p>
+        <div class="tags">
+          <span class="tag blue">R / Bioconductor</span>
+          <span class="tag blue">Python</span>
+          <span class="tag">GWAS</span>
+          <span class="tag">RNA-seq</span>
+          <span class="tag">Nextflow</span>
+          <span class="tag red">ggplot2 ♡</span>
+          <span class="tag">Bash</span>
+          <span class="tag">Git</span>
+        </div>
+      </div>
+
+      <p class="page-num">p. 3</p>
+    </div>
+
+    <!-- PAGE 4 — PROJECTS -->
+    <div class="page ruled" id="projects">
+      <div class="margin" style="top:2rem">
+        <span class="margin-note">all code<br/>on GitHub</span>
+        <span class="margin-arrow">↘</span>
+      </div>
+
+      <span class="entry-date">section iii — project log</span>
+      <h2>Things I've actually built</h2>
+
+      <div class="project-entry" data-n="①">
+        <div class="tape" style="top:-8px;left:8px;transform:rotate(-1deg);width:45px"></div>
+        <p style="font-family:'DM Mono',monospace;font-size:10px;color:var(--pencil);letter-spacing:0.06em;margin-bottom:0.3rem">MSc DISSERTATION · 2025</p>
+        <h3>[Your Dissertation Title]</h3>
+        <p class="hand" style="font-size:15px;margin-bottom:0.6rem">[One or two sentences: what question, what data, what you found. Be specific — "I used UK Biobank genotype data to…" beats "I investigated genomic factors in…"]</p>
+        <div class="tags">
+          <span class="tag blue">R</span><span class="tag blue">Bioconductor</span><span class="tag">PLINK</span>
+        </div>
+        <p style="font-family:'Caveat',cursive;font-size:13px;color:var(--blue-pen);margin-top:0.5rem">github.com/yourname/project-one →</p>
+      </div>
+
+      <div class="project-entry" data-n="②">
+        <p style="font-family:'DM Mono',monospace;font-size:10px;color:var(--pencil);letter-spacing:0.06em;margin-bottom:0.3rem">MODULE PROJECT · 2024</p>
+        <h3>[Second Project Title]</h3>
+        <p class="hand" style="font-size:15px;margin-bottom:0.6rem">[What you tackled, how, and what you learned. Don't shy from saying something was hard or unexpected — that's interesting.]</p>
+        <div class="tags">
+          <span class="tag blue">Python</span><span class="tag">scikit-learn</span><span class="tag">Pandas</span>
+        </div>
+        <p style="font-family:'Caveat',cursive;font-size:13px;color:var(--blue-pen);margin-top:0.5rem">github.com/yourname/project-two →</p>
+      </div>
+
+      <div class="project-entry" data-n="③">
+        <div class="sticky pink" style="position:relative;float:right;margin-left:1rem;margin-bottom:0.5rem;font-size:13px;padding:0.6rem 0.8rem">
+          presented at<br/>[conference / seminar]!
+        </div>
+        <p style="font-family:'DM Mono',monospace;font-size:10px;color:var(--pencil);letter-spacing:0.06em;margin-bottom:0.3rem">INDEPENDENT · 2024</p>
+        <h3>[Third Project or Analysis]</h3>
+        <p class="hand" style="font-size:15px;margin-bottom:0.6rem">[Self-directed exploration, open dataset, or extended tutorial. Shows curiosity beyond coursework.]</p>
+        <div class="tags">
+          <span class="tag">R</span><span class="tag">Nextflow</span><span class="tag blue">Bash</span>
+        </div>
+        <p style="font-family:'Caveat',cursive;font-size:13px;color:var(--blue-pen);margin-top:0.5rem">github.com/yourname/project-three →</p>
+      </div>
+
+      <p class="page-num">p. 4</p>
+    </div>
+
+    <!-- PAGE 5 — CONTACT -->
+    <div class="page ruled" style="padding-bottom:5rem" id="contact">
+      <div class="margin" style="top:2rem">
+        <span class="margin-note" style="color:var(--blue-pen)">please<br/>reach out!</span>
+        <span class="margin-star">♡</span>
+      </div>
+
+      <span class="entry-date">section iv — get in touch</span>
+      <h2>Let's talk.</h2>
+
+      <p class="hand" style="max-width:480px">
+        Whether you're a potential PhD supervisor, an NHS data team, a genomics startup, or just someone who also thinks GWAS is genuinely exciting — I'd love to hear from you.
+      </p>
+
+      <hr class="hand-rule"/>
+
+      <div class="contact-block">
+        <div class="tape" style="top:-9px;left:50%;transform:translateX(-50%) rotate(-0.5deg);width:80px"></div>
+        <h3>Contact details</h3>
+        <div class="contact-row">
+          <span class="label">EMAIL</span>
+          <a href="mailto:you@email.com" style="color:var(--blue-pen);font-family:'Caveat',cursive;font-size:16px">you@email.com</a>
+        </div>
+        <div class="contact-row">
+          <span class="label">LINKEDIN</span>
+          <a href="https://linkedin.com/in/yourprofile" target="_blank" style="color:var(--blue-pen);font-family:'Caveat',cursive;font-size:16px">linkedin.com/in/yourprofile</a>
+        </div>
+        <div class="contact-row">
+          <span class="label">GITHUB</span>
+          <a href="https://github.com/yourhandle" target="_blank" style="color:var(--blue-pen);font-family:'Caveat',cursive;font-size:16px">github.com/yourhandle</a>
+        </div>
+        <div class="contact-row">
+          <span class="label">ORCID</span>
+          <span>0000-0000-0000-0000</span>
+        </div>
+      </div>
+
+      <div class="sticky blue" style="position:relative;margin-top:2.5rem;display:inline-block">
+        CV available on<br/>request (or GitHub)
+      </div>
+
+      <p class="footnote" style="position:absolute;bottom:2rem;left:7.5rem;right:3rem">
+        ¹ All views my own. ² All code available under MIT licence unless otherwise noted. ³ Yes, I do enjoy a good volcano plot.
+      </p>
+
+      <p class="page-num">p. 5</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('dna-canvas');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+let t = 0;
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  const cx = W / 2;
+  const rungs = 22;
+  const spacing = H / (rungs + 1);
+  const amp = 34;
+
+  for (let i = 0; i <= rungs; i++) {
+    const y = spacing + i * spacing;
+    const phase = i * (2 * Math.PI / rungs) + t;
+    const x1 = cx + Math.sin(phase) * amp;
+    const x2 = cx + Math.sin(phase + Math.PI) * amp;
+    const depth = (Math.sin(phase) + 1) / 2;
+    const alpha = 0.15 + 0.5 * depth;
+
+    ctx.beginPath();
+    ctx.moveTo(x1, y);
+    ctx.lineTo(x2, y);
+    ctx.strokeStyle = `rgba(160,100,100,${alpha})`;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    [[x1, 0],[x2, 1]].forEach(([x, si]) => {
+      const a = si === 0 ? depth : 1 - depth;
+      ctx.beginPath();
+      ctx.arc(x, y, 3.5, 0, Math.PI * 2);
+      ctx.fillStyle = si === 0
+        ? `rgba(176,48,48,${0.4 + 0.5*a})`
+        : `rgba(42,74,122,${0.4 + 0.5*a})`;
+      ctx.fill();
+    });
+  }
+
+  ctx.beginPath();
+  for (let y = 0; y <= H; y += 2) {
+    const ph = y * (2 * Math.PI / (H / rungs)) + t;
+    const x = cx + Math.sin(ph) * amp;
+    y === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.strokeStyle = 'rgba(176,48,48,0.55)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.beginPath();
+  for (let y = 0; y <= H; y += 2) {
+    const ph = y * (2 * Math.PI / (H / rungs)) + t + Math.PI;
+    const x = cx + Math.sin(ph) * amp;
+    y === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.strokeStyle = 'rgba(42,74,122,0.55)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  t += 0.016;
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
